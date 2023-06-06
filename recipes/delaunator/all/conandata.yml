@@ -1,0 +1,4 @@
+sources:
+  "0.4.0":
+    url: "https://github.com/friendlyanon/delaunator-cpp/archive/refs/tags/0.4.0.zip"
+    sha256: "677720b9b486012728959c4cbe00fe049eb82d7fe9f2adca70537dc525af2004"

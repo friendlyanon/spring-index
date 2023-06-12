@@ -1,0 +1,55 @@
+--- source_subfolder/AI/Wrappers/CUtils/SimpleProfiler.cpp
++++ source_subfolder/AI/Wrappers/CUtils/SimpleProfiler.cpp
+@@ -97,12 +97,6 @@
+ }
+ 
+ char*         simpleProfiler_getSummaryString() {
+-
+ 	const std::string& summaryStr = Profiler::GetDefault()->ToString();
+-	const int length = summaryStr.length();
+-	char* summary = util_allocStr(length);
+-
+-	STRCPY_T(summary, length, summaryStr.c_str());
+-
+-	return summary;
++	return (char*) memcpy(util_allocStr(summaryStr.size()), summaryStr.c_str(), summaryStr.size());
+ }
+--- source_subfolder/AI/Wrappers/CUtils/Util.c
++++ source_subfolder/AI/Wrappers/CUtils/Util.c
+@@ -46,9 +46,7 @@
+ 	}
+ 
+ 	const size_t copy_sizeMax = strlen(toCopy) + 1;
+-	char* copy = (char*) calloc(copy_sizeMax, sizeof(char));
+-	STRCPY_T(copy, copy_sizeMax, toCopy);
+-	return copy;
++	return memcpy(calloc(copy_sizeMax, sizeof(char)), toCopy, copy_sizeMax);
+ }
+ 
+ char* util_allocStrSubCpy(const char* toCopy, int fromPos, int toPos) {
+--- source_subfolder/AI/Wrappers/CUtils/SimpleLog.h
++++ source_subfolder/AI/Wrappers/CUtils/SimpleLog.h
+@@ -22,12 +22,9 @@
+ extern "C" {
+ #endif
+ 
+-#include "System/Log/Level.h"
+-#include "System/ExportDefines.h"
+-
+ #include <stdbool.h> /* bool, true, false */
+ 
+-typedef void (CALLING_CONV *logfunction)(int id, const char* section, int level, const char* msg);
++typedef void (*logfunction)(int id, const char* section, int level, const char* msg);
+ 
+ void simpleLog_initcallback(int, const char* section, logfunction func, int loglevel);
+ 
+--- source_subfolder/AI/Wrappers/CUtils/SimpleLog.c
++++ source_subfolder/AI/Wrappers/CUtils/SimpleLog.c
+@@ -19,6 +19,7 @@
+ 
+ #include "Util.h"
+ 
++#include "System/Log/Level.h"
+ #include "System/MainDefines.h"
+ #include "System/SafeCStrings.h"
+ 

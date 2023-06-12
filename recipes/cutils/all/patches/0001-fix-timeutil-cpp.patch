@@ -1,0 +1,25 @@
+--- source_subfolder/AI/Wrappers/CUtils/TimeUtil.cpp
++++ source_subfolder/AI/Wrappers/CUtils/TimeUtil.cpp
+@@ -17,13 +17,6 @@
+ #include <iostream>
+ 
+ using namespace std;
+- 
+-#if defined(_MSC_VER) || defined(_MSC_EXTENSIONS)
+-	#define DELTA_EPOCH_IN_MICROSECS  11644473600000000Ui64
+-	#include <winsock2.h>
+-#else
+-	#define DELTA_EPOCH_IN_MICROSECS  11644473600000000ULL
+-#endif
+ 
+ /// Definition of a gettimeofday function
+ int gettimeofday(struct timeval* tv, struct timezone* tz) {
+@@ -48,7 +41,7 @@
+ 
+ 		// The Unix epoch starts on Jan 1 1970.  Need to subtract the difference 
+ 		// in seconds from Jan 1 1601.
+-		tmpres -= DELTA_EPOCH_IN_MICROSECS;
++		tmpres -= 11644473600000000ULL;
+ 
+ 		// Finally change microseconds to seconds and place in the seconds value. 
+ 		// The modulus picks up the microseconds.

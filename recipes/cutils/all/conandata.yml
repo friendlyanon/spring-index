@@ -1,0 +1,12 @@
+sources:
+  "r1":
+    url: "https://github.com/beyond-all-reason/spring/archive/refs/tags/spring_bar_%7BBAR105%7D105.1.1-1806-g5f78600.zip"
+    sha256: "78ed7ad8b79131acca1fcd250a235ecf12e28896a740f0e10ce3781152e65245"
+patches:
+  "r1":
+    - patch_file: "patches/0001-fix-timeutil-cpp.patch"
+      patch_description: "Remove double inclusion of Windows headers"
+      patch_type: "portability"
+    - patch_file: "patches/0002-fix-circular-dependency.patch"
+      patch_description: "Remove dependency on Spring symbols"
+      patch_type: "portability"

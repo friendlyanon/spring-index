@@ -1,0 +1,4 @@
+sources:
+  "r1":
+    url: "https://github.com/SergeyMakeev/smmalloc/archive/2604799f22db65a35bbd70a45e7fb40e0310ca16.zip"
+    sha256: "f7450003206a0939cb1ccf4845858c4248ec760742c42eca807d79e6a909239f"
